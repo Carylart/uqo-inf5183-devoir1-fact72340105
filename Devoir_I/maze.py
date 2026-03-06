@@ -7,6 +7,14 @@ START = 'S'
 GOAL = 'G'
 
 
+def print_maze(maze):
+    """
+    Affiche le labyrinthe dans la console.
+    """
+
+    for row in maze:
+        print(" ".join(row))
+
 def generate_random_path(n, rng):
     """
     Génère un chemin aléatoire entre S et G
@@ -123,29 +131,3 @@ def generate_maze(n, seed, wall_prob=0.5):
     maze[goal[0]][goal[1]] = GOAL
 
     return maze
-
-
-def print_maze(maze):
-    """
-    Affiche le labyrinthe dans la console.
-    """
-
-    for row in maze:
-        print(" ".join(row))
-
-
-def main():
-    """
-    Point d'entrée du programme.
-    """
-
-    n = 32      # Taille du labyrinthe
-    seed = 42   # Seed pour reproductibilité
-
-    maze = generate_maze(n, seed)
-
-    print_maze(maze)
-
-
-if __name__ == "__main__":
-    main()
