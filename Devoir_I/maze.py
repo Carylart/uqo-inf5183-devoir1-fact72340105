@@ -123,6 +123,7 @@ def generate_maze(n, seed, wall_prob=0.5):
             # Sinon on place un mur avec une certaine probabilité
             if rng.random() < wall_prob:
                 maze[i][j] = WALL
+                # Cosmétique pour éviter les poches fermées
                 if creates_closed_cell(maze, i, j):
                     maze[i][j] = PATH
 
@@ -131,3 +132,73 @@ def generate_maze(n, seed, wall_prob=0.5):
     maze[goal[0]][goal[1]] = GOAL
 
     return maze
+
+def show_exploration(maze, visited):
+    """
+    Affiche le labyrinthe en montrant toutes les cases explorées.
+
+    Les cases explorées sont marquées avec 'p'.
+    Les murs et les cases spéciales restent inchangés.
+
+    Paramètres :
+    maze : labyrinthe original
+    visited : ensemble des cases visitées par DFS
+    """
+
+    # Création d'une copie du labyrinthe pour l'affichage
+    display = [row[:] for row in maze]
+
+    # Marquer les cases explorées
+    for x, y in visited:
+        if display[x][y] == '.':
+            display[x][y] = 'p'
+
+    # Afficher le labyrinthe ligne par ligne
+    for row in display:
+        print(" ".join(row))
+
+def show_solution(maze, path):
+    """
+    Affiche le labyrinthe avec le chemin solution trouvé.
+
+    Les cases du chemin sont marquées avec '*'.
+
+    Paramètres :
+    maze : labyrinthe original
+    path : liste des coordonnées du chemin solution
+    """
+
+    # Création d'une copie du labyrinthe
+    display = [row[:] for row in maze]
+
+    # Marquer les cases du chemin
+    for x, y in path:
+        if display[x][y] == '.':
+            display[x][y] = '*'
+
+    # Afficher le labyrinthe
+    for row in display:
+        print(" ".join(row))
+
+def print_path(path):
+    """
+    Affiche le chemin solution sous forme de coordonnées.
+
+    Exemple :
+    Chemin : S (1,1) -> (2,1) -> (3,1) -> ... -> G (14,14)
+    """
+
+    result = "Chemin : "
+
+    for i, (x, y) in enumerate(path):
+
+        if i == 0:
+            result += f"S ({x}, {y}) -> "
+
+        elif i == len(path) - 1:
+            result += f"G ({x}, {y})"
+
+        else:
+            result += f"({x}, {y}) -> "
+
+    print(result)
