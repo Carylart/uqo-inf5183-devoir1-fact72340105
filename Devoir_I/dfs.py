@@ -1,4 +1,5 @@
 import time
+from maze import WALL
 
 def dfs_maze(maze):
     """
@@ -76,7 +77,7 @@ def dfs_maze(maze):
             if (
                 0 <= nx < rows and
                 0 <= ny < cols and
-                maze[nx][ny] != '#' and
+                maze[nx][ny] != WALL and
                 (nx, ny) not in visited
             ):
 

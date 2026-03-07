@@ -1,5 +1,6 @@
 import time
 import heapq
+from maze import WALL
 
 
 def manhattan(a, b):
@@ -115,7 +116,7 @@ def astar_maze(maze):
             if (
                 0 <= nx < rows and
                 0 <= ny < cols and
-                maze[nx][ny] != '#'
+                maze[nx][ny] != WALL
             ):
 
                 # Calcul du coût réel pour atteindre ce voisin

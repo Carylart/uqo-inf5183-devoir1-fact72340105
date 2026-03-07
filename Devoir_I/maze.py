@@ -5,15 +5,8 @@ WALL = '#'
 PATH = '.'
 START = 'S'
 GOAL = 'G'
-
-
-def print_maze(maze):
-    """
-    Affiche le labyrinthe dans la console.
-    """
-
-    for row in maze:
-        print(" ".join(row))
+EXPLORED = "p"
+SOLUTION = "*"
 
 def generate_random_path(n, rng):
     """
@@ -133,59 +126,58 @@ def generate_maze(n, seed, wall_prob=0.5):
 
     return maze
 
+def show_maze(maze):
+    """
+    Retourne le labyrinthe sous forme de string.
+    """
+
+    result = []
+
+    for row in maze:
+        result.append(" ".join(row))
+
+    return "\n".join(result)
+
 def show_exploration(maze, visited):
     """
-    Affiche le labyrinthe en montrant toutes les cases explorées.
-
-    Les cases explorées sont marquées avec 'p'.
-    Les murs et les cases spéciales restent inchangés.
-
-    Paramètres :
-    maze : labyrinthe original
-    visited : ensemble des cases visitées par DFS
+    Retourne l'affichage de l'exploration.
     """
 
-    # Création d'une copie du labyrinthe pour l'affichage
     display = [row[:] for row in maze]
 
-    # Marquer les cases explorées
     for x, y in visited:
-        if display[x][y] == '.':
-            display[x][y] = 'p'
+        if display[x][y] == PATH:
+            display[x][y] = EXPLORED
 
-    # Afficher le labyrinthe ligne par ligne
+    result = []
+
     for row in display:
-        print(" ".join(row))
+        result.append(" ".join(row))
+
+    return "\n".join(result)
 
 def show_solution(maze, path):
     """
-    Affiche le labyrinthe avec le chemin solution trouvé.
-
-    Les cases du chemin sont marquées avec '*'.
-
-    Paramètres :
-    maze : labyrinthe original
-    path : liste des coordonnées du chemin solution
+    Retourne l'affichage du chemin solution.
     """
 
-    # Création d'une copie du labyrinthe
     display = [row[:] for row in maze]
 
-    # Marquer les cases du chemin
     for x, y in path:
-        if display[x][y] == '.':
-            display[x][y] = '*'
+        if display[x][y] == PATH:
+            display[x][y] = EXPLORED
 
-    # Afficher le labyrinthe
+    result = []
+
     for row in display:
-        print(" ".join(row))
+        result.append(" ".join(row))
 
-def print_path(path):
+    return "\n".join(result)
+
+
+def show_path(path):
     """
-    Affiche le chemin solution sous forme de coordonnées.
-
-    Exemple :
-    Chemin : S (1,1) -> (2,1) -> (3,1) -> ... -> G (14,14)
+    Retourne le chemin sous forme de texte.
     """
 
     result = "Chemin : "
@@ -193,12 +185,12 @@ def print_path(path):
     for i, (x, y) in enumerate(path):
 
         if i == 0:
-            result += f"S ({x}, {y}) -> "
+            result += f"{START} ({x}, {y}) -> "
 
         elif i == len(path) - 1:
-            result += f"G ({x}, {y})"
+            result += f"{GOAL} ({x}, {y})"
 
         else:
             result += f"({x}, {y}) -> "
 
-    print(result)
+    return result

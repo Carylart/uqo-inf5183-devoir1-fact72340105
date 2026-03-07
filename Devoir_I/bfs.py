@@ -1,5 +1,6 @@
 import time
 from collections import deque
+from maze import WALL
 
 def bfs_maze(maze):
     """
@@ -75,7 +76,7 @@ def bfs_maze(maze):
             if (
                 0 <= nx < rows and
                 0 <= ny < cols and
-                maze[nx][ny] != '#' and
+                maze[nx][ny] != WALL and
                 (nx, ny) not in visited
             ):
 
